@@ -65,8 +65,8 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   backButton: {
-    width: "26@s",
-    height: "26@s",
+    width: "30@s",
+    height: "30@s",
     marginTop: "60@s",
     marginStart: "20@s",
   },
@@ -74,7 +74,7 @@ const styles = ScaledSheet.create({
     fontFamily: "NunitoSans",
     fontSize: "22@s",
     textAlign: "center",
-    marginTop: "40@s",
+    marginTop: "30@s",
   },
   buttonContainer: {
     marginTop: "40@s",
