@@ -52,7 +52,6 @@ const ContentDetail = ({ navigation }) => {
     );
   }
 
-  console.log("Rendered content:", content); // State'in doğru güncellenip güncellenmediğini kontrol edin
 
   return (
     <ScrollView>
@@ -86,14 +85,10 @@ const ContentDetail = ({ navigation }) => {
             </View>
 
             <View style={styles.subButtonsContainer}>
+              <View style={styles.line}></View>
               <TouchableOpacity style={styles.subButtons}>
                 <Ionicons name="play-circle" size={30} />
                 <Text style={styles.buttonText}>İçeriği Dinle</Text>
-              </TouchableOpacity>
-              <View style={styles.line}></View>
-              <TouchableOpacity style={styles.subButtons}>
-                <Ionicons name="pin" size={30} />
-                <Text style={styles.buttonText}>Müze İçerisindeki Konumu</Text>
               </TouchableOpacity>
             </View>
             <View style={{ height: 400 }}></View>
@@ -176,7 +171,7 @@ const styles = ScaledSheet.create({
     position: "absolute",
     width: "100%",
     height: "100@s",
-    marginTop: "700@s",
+    marginTop: "740@s",
   },
   subButtons: {
     flexDirection: "row",

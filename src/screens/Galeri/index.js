@@ -26,28 +26,34 @@ const Galeri = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("Bandırma Arkeoloji Müzesi")}
         >
-          <Text style={styles.buttonText}>Bandirma Arkeoloji Müzesi</Text>
+          <Text style={styles.buttonText}>Bandırma Arkeoloji Müzesi</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Bursa Kent Müzesi</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("İstanbul Arkeoloji Müzesi")}
         >
           <Text style={styles.buttonText}>İstanbul Arkeoloji Müzesi</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("Topkapı Sarayı")}
-        >
-          <Text style={styles.buttonText}>Topkapı Sarayı</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("Şanlıurfa Arkeoloji Müzesi")}
         >
           <Text style={styles.buttonText}>Şanlıurfa Arkeoloji Müzesi</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Bursa Kent Müzesi")}
+        >
+          <Text style={styles.buttonText}>Bursa Kent Müzesi</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Topkapı Sarayı")}
+        >
+          <Text style={styles.buttonText}>Topkapı Sarayı</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -68,10 +74,10 @@ const styles = ScaledSheet.create({
     fontFamily: "NunitoSans",
     fontSize: "22@s",
     textAlign: "center",
-    marginTop: "50@s",
+    marginTop: "40@s",
   },
   buttonContainer: {
-    marginTop: "50@s",
+    marginTop: "40@s",
   },
   button: {
     backgroundColor: "#218DF0",

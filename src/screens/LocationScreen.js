@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 
 
-const BALIKESIR_MUZE = { latitude: 39.645974613481954, longitude: 27.87982377800246 };
+const BALIKESIR_MUZE = { latitude: 40.34832683118081, longitude: 27.953982548615926 };
 const BURSA_ULU_CAMI = { latitude: 40.18410534034755, longitude: 29.061900895635265 };
 const BURSA_KENT_MUZESI = { latitude: 40.18258056204574, longitude: 29.066452865120397 };
 const EV = { latitude: 40.183070684319965, longitude: 29.059139847307623}
