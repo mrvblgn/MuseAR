@@ -20,9 +20,6 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { db } from "../firebaseConfig";
-import { useFavorites } from '../../context/FavoritesContext';
-
-const favButton = require('../../images/Fav Button.png');
 
 const Cdetailbur = ({ navigation, route }) => {
   const { id } = route.params;
@@ -36,8 +33,6 @@ const Cdetailbur = ({ navigation, route }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const { addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -142,15 +137,6 @@ const Cdetailbur = ({ navigation, route }) => {
 
   console.log("Rendered content:", content);
 
-  const handleFavoritePress = () => {
-    if (isFavorited) {
-      removeFavorite(item.id);
-    } else {
-      addFavorite(item);
-    }
-    setIsFavorited(!isFavorited);
-  };
-
   return (
     <View style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -166,7 +152,7 @@ const Cdetailbur = ({ navigation, route }) => {
                     />
                   </TouchableOpacity>
 
-                  <TouchableOpacity onPress={handleFavoritePress}>
+                  <TouchableOpacity>
                     <Image
                       source={require("../../images/Fav Button.png")}
                       style={styles.favButton}
