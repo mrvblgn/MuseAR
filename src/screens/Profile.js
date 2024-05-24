@@ -1,12 +1,52 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
+import { useFavorites } from '../context/FavoritesContext';
 
 const Profile = () => {
-  return (
-    <View>
-        
-    </View>
-  )
-}
+  const { favorites } = useFavorites();
 
-export default Profile
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Beğenilenler</Text>
+      <FlatList
+        data={favorites}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.itemContainer}>
+            <Image source={item.image} style={styles.image} />
+            <Text style={styles.itemTitle}>{item.title}</Text>
+            <Text style={styles.itemDescription}>{item.description}</Text>
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 16,
+  },
+  itemContainer: {
+    marginBottom: 16,
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  itemTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  itemDescription: {
+    fontSize: 14,
+    color: '#666',
+  },
+});
+
+export default Profile;
