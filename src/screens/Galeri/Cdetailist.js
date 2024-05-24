@@ -135,8 +135,6 @@ const Cdetailist = ({ navigation, route }) => {
     );
   }
 
-  console.log("Rendered content:", content);
-
   return (
     <View style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -166,20 +164,17 @@ const Cdetailist = ({ navigation, route }) => {
               <View style={styles.subContainer}>
                 <Text style={styles.aciklama}>{content.metin}</Text>
                 <View style={styles.subButtonsContainer}>
-                  {!isPlaying &&
-                    !sound && ( // Show "İçeriği Dinle" button if not playing and sound is not loaded
-                      <TouchableOpacity
-                        style={styles.subButtons}
-                        onPress={playSound}
-                      >
-                        <Ionicons
-                          name={"play-circle"}
-                          size={30}
-                          color={"#000"}
-                        />
-                        <Text style={styles.buttonText}>İçeriği Dinle</Text>
-                      </TouchableOpacity>
-                    )}
+                  <TouchableOpacity
+                    style={styles.subButtons}
+                    onPress={isPlaying ? pauseSound : playSound}
+                  >
+                    <Ionicons
+                      name={isPlaying ? "pause-circle" : "play-circle"}
+                      size={30}
+                      color={"#000"}
+                    />
+                      <Text style={styles.buttonText}>İçeriği Dinle</Text>
+                  </TouchableOpacity>
                   <View style={styles.line}></View>
                 </View>
               </View>

@@ -38,7 +38,7 @@ export const eserler = [
   },
   {
     id: 4,
-    name: "Bizans dönemi Bronz Diptikon",
+    name: "Bizans Dönemi Bronz Diptikon",
     source: {
       uri: "https://firebasestorage.googleapis.com/v0/b/muze-ca804.appspot.com/o/BandirmaArkeoloji%2Fbronz_diptikon.jpeg?alt=media&token=a7626cf1-6f9b-415f-8fe1-c6cf102183e5",
     },
