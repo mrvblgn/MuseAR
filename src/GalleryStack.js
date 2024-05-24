@@ -9,6 +9,9 @@ import MuzeIstArk from "./screens/Galeri/İstanbulArkeoloji";
 import MuzeSanArk from "./screens/Galeri/SanliurfaArkeoloji";
 import MuzeTopk from "./screens/Galeri/TopkapiSarayi";
 import ContentDetail from "./screens/Galeri/ContentDetail";
+import Cdetailist from "./screens/Galeri/Cdetailist";
+import Cdetailsan from "./screens/Galeri/Cdetailsan";
+import Cdetailtopk from "./screens/Galeri/Cdetailtopk";
 import Player from "./components/Player";
 
 const Stack = createNativeStackNavigator();
@@ -55,6 +58,27 @@ const GalleryStack = () => {
       <Stack.Screen
         name="Content Detail"
         component={ContentDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Content Detailist"
+        component={Cdetailist}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Content Detailsan"
+        component={Cdetailsan}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Content Detailtopk"
+        component={Cdetailtopk}
         options={{
           headerShown: false,
         }}
