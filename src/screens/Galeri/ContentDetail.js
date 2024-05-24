@@ -13,6 +13,11 @@ import { ScaledSheet } from "react-native-size-matters";
 import { Ionicons } from "@expo/vector-icons";
 import { db } from "../firebaseConfig";
 import { ref, get } from "firebase/database";
+import { useFavorites } from '../../context/FavoritesContext';
+
+const backButton = require('../../images/Back Button.png');
+const image_1 = require('../../images/es1.png');
+const favButton = require('../../images/Fav Button.png');
 
 const ContentDetail = ({ navigation }) => {
   const [loaded] = useFonts({
@@ -21,6 +26,8 @@ const ContentDetail = ({ navigation }) => {
   });
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const { addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +59,14 @@ const ContentDetail = ({ navigation }) => {
     );
   }
 
+  const handleFavoritePress = () => {
+    if (isFavorited) {
+      removeFavorite(item.id);
+    } else {
+      addFavorite(item);
+    }
+    setIsFavorited(!isFavorited);
+  };
 
   return (
     <ScrollView>
@@ -67,7 +82,7 @@ const ContentDetail = ({ navigation }) => {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleFavoritePress}>
                   <Image
                     source={require("../../images/Fav Button.png")}
                     style={styles.favButton}

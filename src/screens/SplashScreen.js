@@ -10,7 +10,7 @@ const SplashScreen = ({navigation}) => {
   
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation.navigate('LocationScreen');
+            navigation.navigate('AuthStack');
             setIsLoading(false);
         }, 3000); 
 

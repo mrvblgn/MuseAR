@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ScaledSheet } from "react-native-size-matters"
+import { FavoritesProvider } from './src/context/FavoritesContext';
 
 // screens
 import SplashScreen from './src/screens/SplashScreen';
@@ -10,10 +11,22 @@ import LocationScreen from './src/screens/LocationScreen';
 import ARCamera from './src/screens/ARCamera';
 import Profile from './src/screens/Profile';
 import GalleryStack from './src/GalleryStack';
+import Login from './src/screens/Login';
+import Signup from './src/screens/Signup';
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const AuthStack = createNativeStackNavigator();
+
+function AuthStackNavigator() {
+  return (
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+      <AuthStack.Screen name="Signup" component={Signup} />
+      <AuthStack.Screen name="Login" component={Login} />
+    </AuthStack.Navigator>
+  );
+}
 
 
 function TabNavigator() {
@@ -48,15 +61,17 @@ function TabNavigator() {
 }
 
 export default function App() {
-
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}>
-        <Stack.Screen name="SplashScreen" component={SplashScreen} />
-        <Stack.Screen name="LocationScreen" component={LocationScreen} />
-        <Stack.Screen name="TabNavigator" component={TabNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <FavoritesProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}>
+          <Stack.Screen name="SplashScreen" component={SplashScreen} />
+          <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
+          <Stack.Screen name="LocationScreen" component={LocationScreen} />
+          <Stack.Screen name="TabNavigator" component={TabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FavoritesProvider>
   );
 }
 
