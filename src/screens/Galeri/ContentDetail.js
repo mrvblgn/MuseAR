@@ -135,7 +135,10 @@ const ContentDetail = ({ navigation, route }) => {
     );
   }
 
-  console.log("Rendered content:", content);
+  const handlePress = () => {
+    // Navigate to the AuthStack
+    navigation.navigate('AuthStack');
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -152,7 +155,7 @@ const ContentDetail = ({ navigation, route }) => {
                     />
                   </TouchableOpacity>
 
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={handlePress}>
                     <Image
                       source={require("../../images/Fav Button.png")}
                       style={styles.favButton}
