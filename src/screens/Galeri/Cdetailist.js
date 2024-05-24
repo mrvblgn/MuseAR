@@ -20,6 +20,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { db } from "../firebaseConfig";
+import { useFavorites } from '../../context/FavoritesContext';
 
 const Cdetailist = ({ navigation, route }) => {
   const { id } = route.params;
@@ -33,6 +34,8 @@ const Cdetailist = ({ navigation, route }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const { addFavorite, removeFavorite, favorites } = useFavorites();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +52,7 @@ const Cdetailist = ({ navigation, route }) => {
           data.audioUri = audioUrl;
 
           setContent(data);
+          const isFav = favorites.some(fav => fav.id === id);
         } else {
           console.log("No data available");
         }
@@ -67,7 +71,7 @@ const Cdetailist = ({ navigation, route }) => {
         sound.unloadAsync();
       }
     };
-  }, [id]);
+  }, [id,sound, favorites]);
 
   const playSound = async () => {
     if (sound) {
@@ -135,6 +139,15 @@ const Cdetailist = ({ navigation, route }) => {
     );
   }
 
+  const handleFavoritePress = () => {
+    if (isFavorited) {
+      removeFavorite(content.id);
+    } else {
+      addFavorite(content);
+    }
+    setIsFavorited(!isFavorited);
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -150,10 +163,13 @@ const Cdetailist = ({ navigation, route }) => {
                     />
                   </TouchableOpacity>
 
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={handleFavoritePress}>
                     <Image
                       source={require("../../images/Fav Button.png")}
-                      style={styles.favButton}
+                      style={[
+                        styles.favButton,
+                        isFavorited && { tintColor: "red" },
+                      ]}
                     />
                   </TouchableOpacity>
                 </View>

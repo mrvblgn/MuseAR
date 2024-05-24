@@ -35,7 +35,7 @@ const ContentDetail = ({ navigation, route }) => {
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isFavorited, setIsFavorited] = useState(false);
-  const { addFavorite, removeFavorite } = useFavorites();
+  const { addFavorite, removeFavorite, favorites } = useFavorites();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +52,10 @@ const ContentDetail = ({ navigation, route }) => {
           data.audioUri = audioUrl;
 
           setContent(data);
+
+          // Favori kontrolü
+          const isFav = favorites.some(fav => fav.id === id);
+          setIsFavorited(isFav);
         } else {
           console.log("No data available");
         }
@@ -70,7 +74,7 @@ const ContentDetail = ({ navigation, route }) => {
         sound.unloadAsync();
       }
     };
-  }, [id]);
+  }, [id, sound, favorites]);
 
   const playSound = async () => {
     if (sound) {
@@ -140,9 +144,9 @@ const ContentDetail = ({ navigation, route }) => {
 
   const handleFavoritePress = () => {
     if (isFavorited) {
-      removeFavorite(item.id);
+      removeFavorite(content.id);
     } else {
-      addFavorite(item);
+      addFavorite(content);
     }
     setIsFavorited(!isFavorited);
   };
@@ -165,7 +169,10 @@ const ContentDetail = ({ navigation, route }) => {
                   <TouchableOpacity onPress={handleFavoritePress}>
                     <Image
                       source={require("../../images/Fav Button.png")}
-                      style={styles.favButton}
+                      style={[
+                        styles.favButton,
+                        isFavorited && { tintColor: "red" },
+                      ]}
                     />
                   </TouchableOpacity>
                 </View>
@@ -185,7 +192,7 @@ const ContentDetail = ({ navigation, route }) => {
                       size={30}
                       color={"#000"}
                     />
-                      <Text style={styles.buttonText}>İçeriği Dinle</Text>
+                    <Text style={styles.buttonText}>İçeriği Dinle</Text>
                   </TouchableOpacity>
                   <View style={styles.line}></View>
                 </View>
