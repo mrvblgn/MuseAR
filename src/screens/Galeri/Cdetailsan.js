@@ -258,12 +258,12 @@ const styles = ScaledSheet.create({
     marginHorizontal: "25@s",
   },
   backButton: {
-    width: "26@s",
-    height: "26@s",
+    width: "30@s",
+    height: "30@s",
   },
   favButton: {
-    width: "26@s",
-    height: "26@s",
+    width: "30@s",
+    height: "30@s",
   },
   titleContainer: {
     width: "300@s",

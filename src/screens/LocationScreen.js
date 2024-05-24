@@ -81,6 +81,7 @@ const LocationScreen = ({navigation}) => {
       setLocationName("Mühendislik Fakültesi Ek Bina'da Gözüküyorsunuz.\nDoğru mu ?");
     } else {
       setLocationName("sistemimize kayıtlı bir müze yakınında değilsiniz.");
+      navigation.navigate('TabNavigator', { screen: 'GalleryStack' });
     }
 
     setMapRegion({
@@ -169,7 +170,7 @@ const styles = ScaledSheet.create({
   konumText: {
     fontFamily: 'NunitoSans',
     marginTop: '330@s',
-    fontSize: '30@s',
+    fontSize: '25@s',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center'

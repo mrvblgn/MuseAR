@@ -154,8 +154,8 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   backButton: {
-    width: "26@s",
-    height: "26@s",
+    width: "30@s",
+    height: "30@s",
     marginTop: "50@s",
     marginStart: "20@s",
   },
