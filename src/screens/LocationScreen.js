@@ -7,10 +7,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 
 
-const BALIKESIR_MUZE = { latitude: 40.34832683118081, longitude: 27.953982548615926 };
-const BURSA_ULU_CAMI = { latitude: 40.18410534034755, longitude: 29.061900895635265 };
+const BANDIRMA_MUZE = { latitude: 40.34832683118081, longitude: 27.953982548615926 };
+const ISTANBUL_ARKEOLOJI = { latitude: 41.01187973898854, longitude: 28.981384151673197 };
+const SANLIURFA_ARKEOLOJI = { latitude: 37.15444421626663, longitude: 38.78125854788157 };
 const BURSA_KENT_MUZESI = { latitude: 40.18258056204574, longitude: 29.066452865120397 };
-const EV = { latitude: 40.183070684319965, longitude: 29.059139847307623}
+const TOPKAPI_SARAYI = { latitude: 41.01173802745058, longitude: 28.98340036591475 };
+const EV = { latitude: 40.183070684319965, longitude: 29.059139847307623 };
+const EK_BINA = { latitude: 39.54221229955762, longitude: 28.00791148721264 };
 
 const getDistance = (lat1, lon1, lat2, lon2) => {
   var R = 6371; // Radius of the earth in km
@@ -54,22 +57,30 @@ const LocationScreen = ({navigation}) => {
       longitude: location.coords.longitude,
     };
 
-    const distanceToMuseum = getDistance(userCoordinates.latitude, userCoordinates.longitude, BALIKESIR_MUZE.latitude, BALIKESIR_MUZE.longitude);
-    const distanceToCami = getDistance(userCoordinates.latitude, userCoordinates.longitude, BURSA_ULU_CAMI.latitude, BURSA_ULU_CAMI.longitude);
-    const distanceToMuzesi = getDistance(userCoordinates.latitude, userCoordinates.longitude, BURSA_KENT_MUZESI.latitude, BURSA_KENT_MUZESI.longitude);
+    const distanceToBandirma = getDistance(userCoordinates.latitude, userCoordinates.longitude, BANDIRMA_MUZE.latitude, BANDIRMA_MUZE.longitude);
+    const distanceToIstanbul = getDistance(userCoordinates.latitude, userCoordinates.longitude, ISTANBUL_ARKEOLOJI.latitude, ISTANBUL_ARKEOLOJI.longitude);
+    const distanceToSanliurfa = getDistance(userCoordinates.latitude, userCoordinates.longitude, SANLIURFA_ARKEOLOJI.latitude, SANLIURFA_ARKEOLOJI.longitude);
+    const distanceToBursa = getDistance(userCoordinates.latitude, userCoordinates.longitude, BURSA_KENT_MUZESI.latitude, BURSA_KENT_MUZESI.longitude);
+    const distanceToTopkapi = getDistance(userCoordinates.latitude, userCoordinates.longitude, TOPKAPI_SARAYI.latitude, TOPKAPI_SARAYI.longitude);
     const distanceToEv = getDistance(userCoordinates.latitude, userCoordinates.longitude, EV.latitude, EV.longitude);
+    const distanceToEkbina = getDistance(userCoordinates.latitude, userCoordinates.longitude, EK_BINA.latitude, EK_BINA.longitude);
 
-    if (distanceToMuseum < 0.1) { // if less than 100 meters
-      setLocationName("Balıkesir Kuva-yi Milliye Müzesi'nde Gözüküyorsunuz.\nDoğru mu ?");
-    } else if (distanceToCami < 0.1) {
-      setLocationName("Bursa Ulu Camii'de Gözüküyorsunuz.\nDoğru mu ?");
-    } else if (distanceToMuzesi < 0.1) {
+    if (distanceToBandirma < 0.1) { // if less than 100 meters
+      setLocationName("Bandırma Arkeoloji Müzesi'nde Gözüküyorsunuz.\nDoğru mu ?");
+    } else if (distanceToIstanbul < 0.1) {
+      setLocationName("İstanbul Arkeoloji Müzesi'nde Gözüküyorsunuz.\nDoğru mu ?");
+    } else if (distanceToSanliurfa < 0.1) {
+      setLocationName("Şanlıurfa Arkeoloji Müzesi'nde Gözüküyorsunuz.\nDoğru mu ?");
+    } else if (distanceToBursa < 0.1) {
       setLocationName("Bursa Kent Müzesi'nde Gözüküyorsunuz.\nDoğru mu ?");
+    } else if (distanceToTopkapi < 0.1) {
+      setLocationName("Topkapı Sarayı Müzesi'nde Gözüküyorsunuz.\nDoğru mu ?");
     } else if (distanceToEv < 0.1) {
       setLocationName("Ev'de Gözüküyorsunuz.\nDoğru mu ?");
+    } else if (distanceToEkbina < 0.1) {
+      setLocationName("Mühendislik Fakültesi Ek Bina'da Gözüküyorsunuz.\nDoğru mu ?");
     } else {
       setLocationName("sistemimize kayıtlı bir müze yakınında değilsiniz.");
-      navigation.navigate('TabNavigator', { screen: 'GalleryStack' });
     }
 
     setMapRegion({
@@ -87,7 +98,12 @@ const LocationScreen = ({navigation}) => {
   }, []);
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />
+    return (
+      <>
+        <Text style={styles.konumText}>Konum Bilgisi Alınıyor</Text>
+        <ActivityIndicator size="large" color="#0000ff" style={styles.loading}/>
+      </>
+    )
   }
 
   return (
@@ -149,6 +165,17 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: '10@s',
+  },
+  konumText: {
+    fontFamily: 'NunitoSans',
+    marginTop: '330@s',
+    fontSize: '30@s',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center'
+  },
+  loading: {
+    marginTop: '30@s',
   }
 })
 

@@ -53,7 +53,7 @@ const Galeri = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate("Topkapı Sarayı")}
         >
-          <Text style={styles.buttonText}>Topkapı Sarayı</Text>
+          <Text style={styles.buttonText}>Topkapı Sarayı Müzesi</Text>
         </TouchableOpacity>
       </View>
     </View>
