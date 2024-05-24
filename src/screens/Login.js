@@ -1,7 +1,7 @@
 import { View, Text, Image , Pressable, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from '../constants/colors';
+import COLORS from '../constants/color';
 import { Ionicons } from "@expo/vector-icons";
 import Button from '../components/Button';
 
@@ -150,7 +150,6 @@ const Login = ({ navigation }) => {
                         }}
                     >
                         <Image
-                            source={require("../../assets/facebook.png")}
                             style={{
                                 height: 36,
                                 width: 36,
@@ -177,7 +176,6 @@ const Login = ({ navigation }) => {
                         }}
                     >
                         <Image
-                            source={require("../../assets/google.png")}
                             style={{
                                 height: 36,
                                 width: 36,

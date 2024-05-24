@@ -1,12 +1,12 @@
 import { View, Text, Image, Pressable, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from '../constants/colors';
+import COLORS from '../constants/color';
 import { Ionicons } from "@expo/vector-icons";
 import Button from '../components/Button';
-import app from '../../firebaseConfig'
-
+import app from '../screens/firebaseConfig'
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword} from 'firebase/auth'
+
 
 const Signup = ({ navigation }) => {
     const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -209,7 +209,6 @@ const Signup = ({ navigation }) => {
                         }}
                     >
                         <Image
-                            source={require("../../assets/facebook.png")}
                             style={{
                                 height: 36,
                                 width: 36,
@@ -236,7 +235,6 @@ const Signup = ({ navigation }) => {
                         }}
                     >
                         <Image
-                            source={require("../../assets/google.png")}
                             style={{
                                 height: 36,
                                 width: 36,
