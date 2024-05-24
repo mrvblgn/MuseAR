@@ -8,10 +8,12 @@ import Muze1 from "../src/screens/Galeri/BandirmaMuze";
 import MuzeIstArk from "./screens/Galeri/İstanbulArkeoloji";
 import MuzeSanArk from "./screens/Galeri/SanliurfaArkeoloji";
 import MuzeTopk from "./screens/Galeri/TopkapiSarayi";
+import Muzebur from "./screens/Galeri/BursaKent";
 import ContentDetail from "./screens/Galeri/ContentDetail";
 import Cdetailist from "./screens/Galeri/Cdetailist";
 import Cdetailsan from "./screens/Galeri/Cdetailsan";
 import Cdetailtopk from "./screens/Galeri/Cdetailtopk";
+import Cdetailbur from "./screens/Galeri/Cdetailbur";
 import Player from "./components/Player";
 
 const Stack = createNativeStackNavigator();
@@ -56,6 +58,13 @@ const GalleryStack = () => {
         }}
       />
       <Stack.Screen
+        name="Bursa Kent Müzesi"
+        component={Muzebur}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="Content Detail"
         component={ContentDetail}
         options={{
@@ -79,6 +88,13 @@ const GalleryStack = () => {
       <Stack.Screen
         name="Content Detailtopk"
         component={Cdetailtopk}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Content Detailbur"
+        component={Cdetailbur}
         options={{
           headerShown: false,
         }}
