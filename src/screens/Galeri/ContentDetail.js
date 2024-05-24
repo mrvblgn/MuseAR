@@ -20,6 +20,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { db } from "../firebaseConfig";
+import { useFavorites } from '../../context/FavoritesContext';
 
 const ContentDetail = ({ navigation, route }) => {
   const { id } = route.params;
@@ -33,6 +34,8 @@ const ContentDetail = ({ navigation, route }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const { addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -135,9 +138,13 @@ const ContentDetail = ({ navigation, route }) => {
     );
   }
 
-  const handlePress = () => {
-    // Navigate to the AuthStack
-    navigation.navigate('AuthStack');
+  const handleFavoritePress = () => {
+    if (isFavorited) {
+      removeFavorite(item.id);
+    } else {
+      addFavorite(item);
+    }
+    setIsFavorited(!isFavorited);
   };
 
   return (
@@ -155,7 +162,7 @@ const ContentDetail = ({ navigation, route }) => {
                     />
                   </TouchableOpacity>
 
-                  <TouchableOpacity onPress={handlePress}>
+                  <TouchableOpacity onPress={handleFavoritePress}>
                     <Image
                       source={require("../../images/Fav Button.png")}
                       style={styles.favButton}
