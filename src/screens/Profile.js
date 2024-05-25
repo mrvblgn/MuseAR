@@ -26,25 +26,25 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: '16@s',
   },
   title: {
-    fontSize: 24,
-    marginBottom: 16,
+    fontSize: '24@s',
+    marginBottom: '16@s',
   },
   itemContainer: {
-    marginBottom: 16,
+    marginBottom: '16@s',
   },
   image: {
-    width: 100,
-    height: 100,
+    width: '100@s',
+    height: '100@s',
   },
   itemTitle: {
-    fontSize: 18,
+    fontSize: '18@s',
     fontWeight: 'bold',
   },
   itemDescription: {
-    fontSize: 14,
+    fontSize: '14@s',
     color: '#666',
   },
 });

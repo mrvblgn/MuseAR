@@ -139,9 +139,9 @@ const Cdetailsan = ({ navigation, route }) => {
     );
   }
 
-  console.log("Rendered content:", content);
 
   const handleFavoritePress = () => {
+    navigation.navigate("AuthStack")
     if (isFavorited) {
       removeFavorite(content.id);
     } else {
@@ -152,7 +152,7 @@ const Cdetailsan = ({ navigation, route }) => {
 
   return (
     <View style={styles.mainContainer}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView>
         <View style={styles.container}>
           {content && (
             <>
@@ -182,6 +182,7 @@ const Cdetailsan = ({ navigation, route }) => {
               <View style={styles.subContainer}>
                 <Text style={styles.aciklama}>{content.metin}</Text>
                 <View style={styles.subButtonsContainer}>
+                  <View style={styles.line}></View>
                   <TouchableOpacity
                     style={styles.subButtons}
                     onPress={isPlaying ? pauseSound : playSound}
@@ -193,10 +194,8 @@ const Cdetailsan = ({ navigation, route }) => {
                     />
                       <Text style={styles.buttonText}>İçeriği Dinle</Text>
                   </TouchableOpacity>
-                  <View style={styles.line}></View>
                 </View>
               </View>
-              <View style={{ height: 50 }}></View>
             </>
           )}
         </View>
@@ -244,20 +243,13 @@ const Cdetailsan = ({ navigation, route }) => {
 };
 
 const styles = ScaledSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  contentContainer: {
-    paddingBottom: 100, // Enough space for the mini player
-  },
-  container: {
-    flex: 1,
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  mainContainer: {
+    flex: 1,
   },
   img: {
     width: "100%",
@@ -279,50 +271,53 @@ const styles = ScaledSheet.create({
     height: "30@s",
   },
   titleContainer: {
-    width: "300@s",
-    height: "60@s",
-    backgroundColor: "#FFFFFF",
-    borderRadius: "12@s",
-    alignSelf: "center",
+    width: '300@s',
+    height: '60@s',
+    backgroundColor: '#FFFFFF',
+    borderRadius: '12@s',
+    alignSelf: 'center',
     zIndex: 1,
-    top: "-30@s",
+    top: '-150@s',
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
-      height: 2,
+        width: 0,
+        height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
   },
   title: {
-    fontFamily: "NunitoSansBold",
-    fontSize: "16@s",
-    marginStart: "20@s",
-    textAlignVertical: "center",
-    lineHeight: "60@s",
+    fontFamily: 'NunitoSansBold',
+    fontSize: '16@s',
+    marginStart: '20@s',
+    textAlignVertical: 'center',
+    lineHeight: '60@s',
   },
   subContainer: {
-    width: "100%",
-    backgroundColor: "#FFFFFF",
-    borderTopRightRadius: "50@s",
-    borderTopLeftRadius: "50@s",
-    marginTop: "-50@s",
-    paddingBottom: "20@s",
+    position: 'absolute',
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderTopRightRadius: '50@s',
+    borderTopLeftRadius: '50@s',
+    marginTop: '370@s',
+    paddingBottom: '300@s',
   },
   aciklama: {
-    fontFamily: "NunitoSans",
-    fontSize: "12@s",
-    color: "#666666",
-    margin: "20@s",
+    fontFamily: 'NunitoSans',
+    fontSize: '12@s',
+    color: '#666666',
+    margin: '20@s',
+    marginTop: '60@s',
   },
   subButtonsContainer: {
-    marginTop: "20@s",
+    width: '100%',
+    height: '100@s',
   },
   subButtons: {
-    flexDirection: "row",
-    margin: "20@s",
-    alignItems: "center",
+    flexDirection: 'row',
+    margin: '20@s',
+    alignItems: 'center',
   },
   line: {
     width: "300@s",
@@ -331,11 +326,12 @@ const styles = ScaledSheet.create({
     backgroundColor: "#E5E5E5",
   },
   buttonText: {
-    marginStart: "10@s",
-    fontFamily: "NunitoSans",
-    fontSize: "14@s",
+    marginStart: '10@s',
+    fontFamily: 'NunitoSans',
+    fontSize: '14@s',
   },
   miniPlayer: {
+    position: "absolute",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -350,7 +346,6 @@ const styles = ScaledSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    position: "absolute",
     bottom: 0,
     width: "100%",
   },

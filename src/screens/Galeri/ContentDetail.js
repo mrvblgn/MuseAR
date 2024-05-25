@@ -143,6 +143,7 @@ const ContentDetail = ({ navigation, route }) => {
   }
 
   const handleFavoritePress = () => {
+    navigation.navigate("AuthStack")
     if (isFavorited) {
       removeFavorite(content.id);
     } else {
@@ -278,7 +279,7 @@ const styles = ScaledSheet.create({
     borderRadius: '12@s',
     alignSelf: 'center',
     zIndex: 1,
-    top: '-80@s',
+    top: '-150@s',
     shadowColor: "#000",
     shadowOffset: {
         width: 0,
@@ -301,14 +302,15 @@ const styles = ScaledSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopRightRadius: '50@s',
     borderTopLeftRadius: '50@s',
-    marginTop: '450@s',
+    marginTop: '370@s',
+    paddingBottom: '300@s',
   },
   aciklama: {
     fontFamily: 'NunitoSans',
     fontSize: '12@s',
     color: '#666666',
     margin: '20@s',
-    marginTop: '50@s',
+    marginTop: '60@s',
   },
   subButtonsContainer: {
     width: '100%',
