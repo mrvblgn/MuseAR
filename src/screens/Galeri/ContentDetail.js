@@ -153,7 +153,7 @@ const ContentDetail = ({ navigation, route }) => {
 
   return (
     <View style={styles.mainContainer}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView>
         <View style={styles.container}>
           {content && (
             <>
@@ -183,6 +183,7 @@ const ContentDetail = ({ navigation, route }) => {
               <View style={styles.subContainer}>
                 <Text style={styles.aciklama}>{content.metin}</Text>
                 <View style={styles.subButtonsContainer}>
+                  <View style={styles.line}></View>
                   <TouchableOpacity
                     style={styles.subButtons}
                     onPress={isPlaying ? pauseSound : playSound}
@@ -194,10 +195,8 @@ const ContentDetail = ({ navigation, route }) => {
                     />
                     <Text style={styles.buttonText}>İçeriği Dinle</Text>
                   </TouchableOpacity>
-                  <View style={styles.line}></View>
                 </View>
               </View>
-              <View style={{ height: 50 }}></View>
             </>
           )}
         </View>
@@ -245,19 +244,12 @@ const ContentDetail = ({ navigation, route }) => {
 };
 
 const styles = ScaledSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  contentContainer: {
-    paddingBottom: 100,
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  container: {
+  mainContainer: {
     flex: 1,
   },
   img: {
@@ -310,7 +302,6 @@ const styles = ScaledSheet.create({
     borderTopRightRadius: '50@s',
     borderTopLeftRadius: '50@s',
     marginTop: '450@s',
-    height: '100%',
   },
   aciklama: {
     fontFamily: 'NunitoSans',
@@ -320,10 +311,8 @@ const styles = ScaledSheet.create({
     marginTop: '50@s',
   },
   subButtonsContainer: {
-    position: 'absolute',
     width: '100%',
     height: '100@s',
-    marginTop: '680@s',
   },
   subButtons: {
     flexDirection: 'row',
@@ -342,6 +331,7 @@ const styles = ScaledSheet.create({
     fontSize: '14@s',
   },
   miniPlayer: {
+    position: "absolute",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -356,7 +346,6 @@ const styles = ScaledSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    position: "absolute",
     bottom: 0,
     width: "100%",
   },

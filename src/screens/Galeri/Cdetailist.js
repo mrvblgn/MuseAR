@@ -150,7 +150,7 @@ const Cdetailist = ({ navigation, route }) => {
 
   return (
     <View style={styles.mainContainer}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView>
         <View style={styles.container}>
           {content && (
             <>
@@ -242,13 +242,7 @@ const Cdetailist = ({ navigation, route }) => {
 };
 
 const styles = ScaledSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  contentContainer: {
-    paddingBottom: 100, // Enough space for the mini player
-  },
+
   container: {
     flex: 1,
   },
