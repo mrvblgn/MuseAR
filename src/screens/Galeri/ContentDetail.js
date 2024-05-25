@@ -155,7 +155,7 @@ const ContentDetail = ({ navigation, route }) => {
   return (
     <View style={styles.mainContainer}>
       <ScrollView>
-        <View style={styles.container}>
+        <View>
           {content && (
             <>
               <ImageBackground source={{ uri: content.uri }} style={styles.img}>
@@ -279,7 +279,7 @@ const styles = ScaledSheet.create({
     borderRadius: '12@s',
     alignSelf: 'center',
     zIndex: 1,
-    top: '-150@s',
+    top: '-80@s',
     shadowColor: "#000",
     shadowOffset: {
         width: 0,
@@ -297,13 +297,11 @@ const styles = ScaledSheet.create({
     lineHeight: '60@s',
   },
   subContainer: {
-    position: 'absolute',
     width: '100%',
     backgroundColor: '#FFFFFF',
     borderTopRightRadius: '50@s',
     borderTopLeftRadius: '50@s',
-    marginTop: '370@s',
-    paddingBottom: '300@s',
+    marginTop: '-120@s',
   },
   aciklama: {
     fontFamily: 'NunitoSans',
