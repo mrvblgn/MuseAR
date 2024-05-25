@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
+import { View, Text, Image, FlatList } from 'react-native';
 import { useFavorites } from '../context/FavoritesContext';
+import { ScaledSheet } from "react-native-size-matters";
 
 const Profile = () => {
   const { favorites } = useFavorites();
@@ -23,14 +24,14 @@ const Profile = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    padding: '16@s',
   },
   title: {
     fontSize: '24@s',
-    marginBottom: '16@s',
+    margin: '16@s',
+    marginTop: '50@s',
   },
   itemContainer: {
     marginBottom: '16@s',
