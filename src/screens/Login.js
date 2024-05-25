@@ -10,8 +10,7 @@ const Login = ({ navigation }) => {
     const [isChecked, setIsChecked] = useState(false);
 
     const handleLogin = () => {
-        // Burada navigasyon işlemi gerçekleştiriliyor
-        navigation.navigate('LocationScreen');
+        navigation.navigate('TabNavigator', { screen: 'Profil' });
     };
     
     return (
@@ -49,6 +48,7 @@ const Login = ({ navigation }) => {
                             placeholder='E-posta adresinizi giriniz'
                             placeholderTextColor={COLORS.black}
                             keyboardType='email-address'
+                            autoCapitalize="none"
                             style={{
                                 width: "100%"
                             }}
@@ -77,6 +77,7 @@ const Login = ({ navigation }) => {
                             placeholder='Şifrenizi girin'
                             placeholderTextColor={COLORS.black}
                             secureTextEntry={isPasswordShown}
+                            autoCapitalize="none"
                             style={{
                                 width: "100%"
                             }}
@@ -193,7 +194,7 @@ const Login = ({ navigation }) => {
                     justifyContent: "center",
                     marginVertical: 22
                 }}>
-                    <Text style={{ fontSize: 16, color: COLORS.black }}>Hesabın yok mu? </Text>
+                    <Text style={{ fontSize: 16, color: COLORS.black }}>Hesabın yok mu?</Text>
                     <Pressable
                         onPress={() => navigation.navigate("Signup")}
                     >

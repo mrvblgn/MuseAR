@@ -64,6 +64,7 @@ const Signup = ({ navigation }) => {
                             placeholder='E-posta adresinizi giriniz'
                             placeholderTextColor={COLORS.black}
                             keyboardType='email-address'
+                            autoCapitalize="none"
                             style={{
                                 width: "100%"
                             }}
@@ -94,6 +95,7 @@ const Signup = ({ navigation }) => {
                             placeholder='+90'
                             placeholderTextColor={COLORS.black}
                             keyboardType='numeric'
+                            autoCapitalize="none"
                             style={{
                                 width: "12%",
                                 borderRightWidth: 1,
@@ -135,6 +137,7 @@ const Signup = ({ navigation }) => {
                             placeholder='Şifrenizi Giriniz'
                             placeholderTextColor={COLORS.black}
                             secureTextEntry={isPasswordShown}
+                            autoCapitalize="none"
                             style={{
                                 width: "100%"
                             }}
