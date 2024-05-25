@@ -17,10 +17,12 @@ import Muze1 from "./src/screens/Galeri/BandirmaMuze";
 import MuzeIstArk from "./src/screens/Galeri/İstanbulArkeoloji";
 import MuzeSanArk from "./src/screens/Galeri/SanliurfaArkeoloji";
 import MuzeTopk from "./src/screens/Galeri/TopkapiSarayi";
+import Muzebur from "./src/screens/Galeri/BursaKent";
 import ContentDetail from "./src/screens/Galeri/ContentDetail";
 import Cdetailist from "./src/screens/Galeri/Cdetailist";
 import Cdetailsan from "./src/screens/Galeri/Cdetailsan";
 import Cdetailtopk from "./src/screens/Galeri/Cdetailtopk";
+import Cdetailbur from "./src/screens/Galeri/Cdetailbur";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -81,10 +83,12 @@ export default function App() {
           <Stack.Screen name="MuzeIstArk" component={MuzeIstArk} />
           <Stack.Screen name="MuzeSanArk" component={MuzeSanArk} />
           <Stack.Screen name="MuzeSanTopk" component={MuzeTopk} />
+          <Stack.Screen name="Muzebur" component={Muzebur} />
           <Stack.Screen name="ContentDetail" component={ContentDetail} />
           <Stack.Screen name="Cdetailist" component={Cdetailist} />
           <Stack.Screen name="Cdetailsan" component={Cdetailsan} />
           <Stack.Screen name="Cdetailtopk" component={Cdetailtopk} />
+          <Stack.Screen name="Cdetailbur" component={Cdetailbur} />
         </Stack.Navigator>
       </NavigationContainer>
     </FavoritesProvider>

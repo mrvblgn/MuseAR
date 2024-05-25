@@ -22,7 +22,7 @@ import {
 import { db } from "../firebaseConfig";
 import { useFavorites } from '../../context/FavoritesContext';
 
-const Cdetailist = ({ navigation, route }) => {
+const Cdetailbur = ({ navigation, route }) => {
   const { id } = route.params;
   const [loaded] = useFonts({
     NunitoSans: require("../../../assets/fonts/NunitoSans.ttf"),
@@ -41,7 +41,7 @@ const Cdetailist = ({ navigation, route }) => {
     const fetchData = async () => {
       console.log("Fetching data for id:", id);
       try {
-        const snapshot = await get(ref(db, `IstanbulArkeoloji/${id}`));
+        const snapshot = await get(ref(db, `BursaKent/${id}`));
         if (snapshot.exists()) {
           const data = snapshot.val();
           console.log("Data fetched successfully:", data);
@@ -139,6 +139,8 @@ const Cdetailist = ({ navigation, route }) => {
     );
   }
 
+  console.log("Rendered content:", content);
+
   const handleFavoritePress = () => {
     if (isFavorited) {
       removeFavorite(content.id);
@@ -180,21 +182,22 @@ const Cdetailist = ({ navigation, route }) => {
               <View style={styles.subContainer}>
                 <Text style={styles.aciklama}>{content.metin}</Text>
                 <View style={styles.subButtonsContainer}>
-                  <TouchableOpacity
-                    style={styles.subButtons}
-                    onPress={isPlaying ? pauseSound : playSound}
-                  >
-                    <Ionicons
-                      name={isPlaying ? "pause-circle" : "play-circle"}
-                      size={30}
-                      color={"#000"}
-                    />
-                      <Text style={styles.buttonText}>İçeriği Dinle</Text>
-                  </TouchableOpacity>
-                  <View style={styles.line}></View>
+                  {!isPlaying &&
+                    !sound && ( // Show "İçeriği Dinle" button if not playing and sound is not loaded
+                      <TouchableOpacity
+                        style={styles.subButtons}
+                        onPress={playSound}
+                      >
+                        <Ionicons
+                          name={"play-circle"}
+                          size={30}
+                          color={"#000"}
+                        />
+                        <Text style={styles.buttonText}>İçeriği Dinle</Text>
+                      </TouchableOpacity>
+                    )}
                 </View>
               </View>
-              <View style={{ height: 50 }}></View>
             </>
           )}
         </View>
@@ -247,7 +250,7 @@ const styles = ScaledSheet.create({
     justifyContent: "space-between",
   },
   contentContainer: {
-    paddingBottom: 100, // Enough space for the mini player
+    paddingBottom: "20@s", // Reduce padding to make sure no extra space below the button
   },
   container: {
     flex: 1,
@@ -269,12 +272,12 @@ const styles = ScaledSheet.create({
     marginHorizontal: "25@s",
   },
   backButton: {
-    width: "30@s",
-    height: "30@s",
+    width: "26@s",
+    height: "26@s",
   },
   favButton: {
-    width: "30@s",
-    height: "30@s",
+    width: "26@s",
+    height: "26@s",
   },
   titleContainer: {
     width: "300@s",
@@ -292,12 +295,12 @@ const styles = ScaledSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    justifyContent: "center", // Center the content vertically
   },
   title: {
     fontFamily: "NunitoSansBold",
     fontSize: "16@s",
-    marginStart: "20@s",
-    textAlignVertical: "center",
+    textAlign: "center", // Center the text horizontally
     lineHeight: "60@s",
   },
   subContainer: {
@@ -306,27 +309,27 @@ const styles = ScaledSheet.create({
     borderTopRightRadius: "50@s",
     borderTopLeftRadius: "50@s",
     marginTop: "-50@s",
+    paddingTop: "20@s", // Add some padding to push the text down
     paddingBottom: "20@s",
+
+    //alignItems: "center", // Center the content horizontally
   },
   aciklama: {
     fontFamily: "NunitoSans",
     fontSize: "12@s",
     color: "#666666",
-    margin: "20@s",
+    marginHorizontal: "20@s", // Use horizontal margin to keep it balanced
+    textAlign: "left", // Ensure text is left-aligned
+    marginTop: "15@s",
   },
   subButtonsContainer: {
     marginTop: "20@s",
+    marginBottom: "20@s", // Add some margin at the bottom
   },
   subButtons: {
     flexDirection: "row",
-    margin: "20@s",
-    alignItems: "center",
-  },
-  line: {
-    width: "300@s",
-    height: "1@s",
-    alignSelf: "center",
-    backgroundColor: "#E5E5E5",
+    marginLeft: "20@s",
+    paddingTop: "20@s",
   },
   buttonText: {
     marginStart: "10@s",
@@ -365,4 +368,4 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default Cdetailist;
+export default Cdetailbur;

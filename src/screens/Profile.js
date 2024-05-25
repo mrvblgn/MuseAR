@@ -14,9 +14,9 @@ const Profile = () => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
-            <Image source={item.image} style={styles.image} />
-            <Text style={styles.itemTitle}>{item.title}</Text>
-            <Text style={styles.itemDescription}>{item.description}</Text>
+            <Image source={{ uri: item.uri }} style={styles.image} />
+            <Text style={styles.itemTitle}>{item.isim}</Text>
+            <Text style={styles.itemDescription}>{item.metin}</Text>
           </View>
         )}
       />
