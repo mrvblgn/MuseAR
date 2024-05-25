@@ -31,14 +31,14 @@ export const eserler = [
   },
   {
     id: 3,
-    name: "Kılıç",
+    name: "Zülfikar Kılıç ve Kını",
     source: {
       uri: "https://firebasestorage.googleapis.com/v0/b/muze-ca804.appspot.com/o/BursaKent%2Fkilic.jpeg?alt=media&token=81dc7e63-a12d-4155-ad0e-1a255c80f22a",
     },
   },
   {
     id: 4,
-    name: "Altın",
+    name: "Altın Mahmudiye",
     source: {
       uri: "https://firebasestorage.googleapis.com/v0/b/muze-ca804.appspot.com/o/BursaKent%2Faltin.jpeg?alt=media&token=771a5028-d295-4d74-a1ec-12cddfb63e38",
     },

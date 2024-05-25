@@ -302,6 +302,7 @@ const styles = ScaledSheet.create({
     borderTopRightRadius: '50@s',
     borderTopLeftRadius: '50@s',
     marginTop: '-120@s',
+    paddingBottom: '100@s',
   },
   aciklama: {
     fontFamily: 'NunitoSans',
