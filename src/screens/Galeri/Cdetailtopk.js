@@ -21,6 +21,10 @@ import {
 } from "firebase/storage";
 import { db } from "../firebaseConfig";
 import { useFavorites } from '../../context/FavoritesContext';
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../screens/Galeri/favoriteService";
 
 const Cdetailtopk = ({ navigation, route }) => {
   const { id } = route.params;
@@ -50,6 +54,7 @@ const Cdetailtopk = ({ navigation, route }) => {
           const audioRef = storageRef(storage, data.audioPath);
           const audioUrl = await getDownloadURL(audioRef); // Get download URL directly
           data.audioUri = audioUrl;
+          data.id = id;
 
           setContent(data);
           const isFav = favorites.some(fav => fav.id === id);
@@ -142,11 +147,10 @@ const Cdetailtopk = ({ navigation, route }) => {
   const handleFavoritePress = () => {
     //navigation.navigate("AuthStack")
     if (isFavorited) {
-      removeFavorite(content.id);
+      removeFromFavorites(id, setIsFavorited); 
     } else {
-      addFavorite(content);
+      addToFavorites(content, setIsFavorited); 
     }
-    setIsFavorited(!isFavorited);
   };
 
   return (

@@ -1,3 +1,4 @@
+//ContentDetail.js
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -20,7 +21,11 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { db } from "../firebaseConfig";
-import { useFavorites } from '../../context/FavoritesContext';
+import { useFavorites } from "../../context/FavoritesContext";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../screens/Galeri/favoriteService";
 
 const ContentDetail = ({ navigation, route }) => {
   const { id } = route.params;
@@ -35,7 +40,7 @@ const ContentDetail = ({ navigation, route }) => {
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isFavorited, setIsFavorited] = useState(false);
-  const { addFavorite, removeFavorite, favorites } = useFavorites();
+  const { favorites } = useFavorites();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,16 +50,17 @@ const ContentDetail = ({ navigation, route }) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
           console.log("Data fetched successfully:", data);
-
+  
           const storage = getStorage();
           const audioRef = storageRef(storage, data.audioPath);
           const audioUrl = await getDownloadURL(audioRef); // Get download URL directly
           data.audioUri = audioUrl;
-
+          data.id = id; // Ensure the id is set on the content object
+  
           setContent(data);
-
+  
           // Favori kontrolü
-          const isFav = favorites.some(fav => fav.id === id);
+          const isFav = favorites.some((fav) => fav.id === id);
           setIsFavorited(isFav);
         } else {
           console.log("No data available");
@@ -65,9 +71,9 @@ const ContentDetail = ({ navigation, route }) => {
         setLoading(false);
       }
     };
-
+  
     fetchData();
-
+  
     return () => {
       if (sound) {
         console.log("Unloading sound");
@@ -75,6 +81,7 @@ const ContentDetail = ({ navigation, route }) => {
       }
     };
   }, [id, sound, favorites]);
+  
 
   const playSound = async () => {
     if (sound) {
@@ -143,15 +150,13 @@ const ContentDetail = ({ navigation, route }) => {
   }
 
   const handleFavoritePress = () => {
-    //navigation.navigate("AuthStack")
     if (isFavorited) {
-      removeFavorite(content.id);
+      removeFromFavorites(id, setIsFavorited); 
     } else {
-      addFavorite(content);
+      addToFavorites(content, setIsFavorited); 
     }
-    setIsFavorited(!isFavorited);
   };
-
+  
   return (
     <View style={styles.mainContainer}>
       <ScrollView>
@@ -273,52 +278,52 @@ const styles = ScaledSheet.create({
     height: "30@s",
   },
   titleContainer: {
-    width: '300@s',
-    height: '60@s',
-    backgroundColor: '#FFFFFF',
-    borderRadius: '12@s',
-    alignSelf: 'center',
+    width: "300@s",
+    height: "60@s",
+    backgroundColor: "#FFFFFF",
+    borderRadius: "12@s",
+    alignSelf: "center",
     zIndex: 1,
-    top: '-80@s',
+    top: "-80@s",
     shadowColor: "#000",
     shadowOffset: {
-        width: 0,
-        height: 2,
+      width: 0,
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
   },
   title: {
-    fontFamily: 'NunitoSansBold',
-    fontSize: '16@s',
-    marginStart: '20@s',
-    textAlignVertical: 'center',
-    lineHeight: '60@s',
+    fontFamily: "NunitoSansBold",
+    fontSize: "16@s",
+    marginStart: "20@s",
+    textAlignVertical: "center",
+    lineHeight: "60@s",
   },
   subContainer: {
-    width: '100%',
-    backgroundColor: '#FFFFFF',
-    borderTopRightRadius: '50@s',
-    borderTopLeftRadius: '50@s',
-    marginTop: '-120@s',
-    paddingBottom: '100@s',
+    width: "100%",
+    backgroundColor: "#FFFFFF",
+    borderTopRightRadius: "50@s",
+    borderTopLeftRadius: "50@s",
+    marginTop: "-120@s",
+    paddingBottom: "100@s",
   },
   aciklama: {
-    fontFamily: 'NunitoSans',
-    fontSize: '12@s',
-    color: '#666666',
-    margin: '20@s',
-    marginTop: '60@s',
+    fontFamily: "NunitoSans",
+    fontSize: "12@s",
+    color: "#666666",
+    margin: "20@s",
+    marginTop: "60@s",
   },
   subButtonsContainer: {
-    width: '100%',
-    height: '100@s',
+    width: "100%",
+    height: "100@s",
   },
   subButtons: {
-    flexDirection: 'row',
-    margin: '20@s',
-    alignItems: 'center',
+    flexDirection: "row",
+    margin: "20@s",
+    alignItems: "center",
   },
   line: {
     width: "300@s",
@@ -327,9 +332,9 @@ const styles = ScaledSheet.create({
     backgroundColor: "#E5E5E5",
   },
   buttonText: {
-    marginStart: '10@s',
-    fontFamily: 'NunitoSans',
-    fontSize: '14@s',
+    marginStart: "10@s",
+    fontFamily: "NunitoSans",
+    fontSize: "14@s",
   },
   miniPlayer: {
     position: "absolute",
