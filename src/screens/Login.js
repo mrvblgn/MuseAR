@@ -1,214 +1,229 @@
-import { View, Text, Image , Pressable, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, TextInput, TouchableOpacity, Alert, Image, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import COLORS from '../constants/color';
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import app from '../screens/firebaseConfig'
+import { useFonts } from 'expo-font';
+import { ScaledSheet } from "react-native-size-matters"
+
 
 const Login = ({ navigation }) => {
-    const [isPasswordShown, setIsPasswordShown] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        navigation.navigate('TabNavigator', { screen: 'Profil' });
-    };
-    
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            <View style={{ flex: 1, marginHorizontal: 22 }}>
-                <View style={{ marginVertical: 22 }}>
-                    <Text style={{
-                        fontSize: 22,
-                        fontWeight: 'bold',
-                        marginVertical: 12,
-                        color: COLORS.black
-                    }}>
-                        Hey! Hoş Geldin 👋
-                    </Text>
-                </View>
+  const [loaded] = useFonts({
+    NunitoSansBold: require('../../assets/fonts/NunitoSansBold.ttf'),
+    NunitoSans: require('../../assets/fonts/NunitoSans.ttf')
+  });
+  if (!loaded) {
+      return null;
+  }
 
-                <View style={{ marginBottom: 12 }}>
-                    <Text style={{
-                        fontSize: 16,
-                        fontWeight: 400,
-                        marginVertical: 8
-                    }}>Email</Text>
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      const auth = getAuth(app);
+      await signInWithEmailAndPassword(auth, email, password);
+      setLoading(false);
+      Alert.alert('Başarılı', 'Giriş başarılı.');
+      navigation.navigate('TabNavigator', { screen: 'Profil' }); // Giriş başarılı olunca ana ekrana yönlendir
+    } catch (error) {
+      setLoading(false);
+      Alert.alert('Hata', error.message);
+    }
+  };
 
-                    <View style={{
-                        width: "100%",
-                        height: 48,
-                        borderColor: COLORS.black,
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        paddingLeft: 22
-                    }}>
-                        <TextInput
-                            placeholder='E-posta adresinizi giriniz'
-                            placeholderTextColor={COLORS.black}
-                            keyboardType='email-address'
-                            autoCapitalize="none"
-                            style={{
-                                width: "100%"
-                            }}
-                        />
-                    </View>
-                </View>
 
-                <View style={{ marginBottom: 12 }}>
-                    <Text style={{
-                        fontSize: 16,
-                        fontWeight: 400,
-                        marginVertical: 8
-                    }}>Şifre</Text>
+  return (
+    <SafeAreaView style={styles.mainContainer}>
+      <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Fotoğraf Beğenmeden Önce</Text>
+          <Text style={styles.titleText}>Lütfen Giriş Yapınız</Text>
+        </View>
 
-                    <View style={{
-                        width: "100%",
-                        height: 48,
-                        borderColor: COLORS.black,
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        paddingLeft: 22
-                    }}>
-                        <TextInput
-                            placeholder='Şifrenizi girin'
-                            placeholderTextColor={COLORS.black}
-                            secureTextEntry={isPasswordShown}
-                            autoCapitalize="none"
-                            style={{
-                                width: "100%"
-                            }}
-                        />
+        <View style={styles.emailContainer}>
+          <Text style={styles.emailText}>E-mail</Text>
+          <View style={styles.emailInput}>
+            <TextInput
+              placeholder='E-posta adresinizi giriniz'
+              placeholderTextColor={COLORS.black}
+              keyboardType='email-address'
+              style={{ width: '100%' }}
+              onChangeText={setEmail}
+              autoCapitalize='none'
+            />
+          </View>
+        </View>
 
-                        <TouchableOpacity
-                            onPress={() => setIsPasswordShown(!isPasswordShown)}
-                            style={{
-                                position: "absolute",
-                                right: 12
-                            }}
-                        >
-                            {
-                                isPasswordShown == true ? (
-                                    <Ionicons name="eye-off" size={24} color={COLORS.black} />
-                                ) : (
-                                    <Ionicons name="eye" size={24} color={COLORS.black} />
-                                )
-                            }
+        <View style={styles.sifreContainer}>
+          <Text style={styles.sifreText}>Şifre</Text>
+          <View style={styles.sifreInput}>
+            <TextInput
+              placeholder='Şifrenizi giriniz'
+              placeholderTextColor={COLORS.black}
+              secureTextEntry={!isPasswordShown}
+              style={{ width: '100%' }}
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity onPress={() => setIsPasswordShown(!isPasswordShown)} style={styles.sifreGoster}>
+              {isPasswordShown ? (
+                <Ionicons name='eye-off' size={24} color={COLORS.black} />
+              ) : (
+                <Ionicons name='eye' size={24} color={COLORS.black} />
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
 
-                        </TouchableOpacity>
-                    </View>
-                </View>
+        <Button title={loading ? 'Yükleniyor...' : 'Giriş Yap'} filled style={styles.button} onPress={handleLogin} disabled={loading} />
 
-                <Button
-                    title="Login"
-                    filled
-                    onPress={handleLogin}
-                    style={{
-                        marginTop: 18,
-                        marginBottom: 4,
-                    }}
-                />
+        <View style={styles.lastContainer}>
+          <Text style={styles.lastText}>Hesabınız yok mu?</Text>
+          <Pressable onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.signupText}>Kaydol</Text>
+          </Pressable>
+        </View>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 20 }}>
-                    <View
-                        style={{
-                            flex: 1,
-                            height: 1,
-                            backgroundColor: COLORS.grey,
-                            marginHorizontal: 10
-                        }}
-                    />
-                    <Text style={{ fontSize: 14 }}>Or Login with</Text>
-                    <View
-                        style={{
-                            flex: 1,
-                            height: 1,
-                            backgroundColor: COLORS.grey,
-                            marginHorizontal: 10
-                        }}
-                    />
-                </View>
+        <View style={styles.loginContainer}>
+          <View style={styles.line} />
+          <Text style={styles.text}>YA DA</Text>
+          <View style={styles.line} />
+        </View>
 
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center'
-                }}>
-                    <TouchableOpacity
-                        onPress={() => console.log("Pressed")}
-                        style={{
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexDirection: 'row',
-                            height: 52,
-                            borderWidth: 1,
-                            borderColor: COLORS.grey,
-                            marginRight: 4,
-                            borderRadius: 10
-                        }}
-                    >
-                        <Image
-                            style={{
-                                height: 36,
-                                width: 36,
-                                marginRight: 8
-                            }}
-                            resizeMode='contain'
-                        />
+        <View>
+          <TouchableOpacity onPress={() => console.log('Pressed')} style={styles.socialmedia}>
+            <Image source={require('../../assets/facebook.png')} style={styles.socialmediaImg} resizeMode='contain' />
+            <Text style={styles.socialmediaText}>Facebook ile devam et</Text>
+          </TouchableOpacity>
 
-                        <Text>Facebook</Text>
-                    </TouchableOpacity>
+          <TouchableOpacity onPress={() => console.log('Pressed')} style={styles.socialmedia}>
+            <Image source={require('../../assets/google.png')} style={styles.socialmediaImg} resizeMode='contain' />
+            <Text style={styles.socialmediaText}>Google ile devam et</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
+    </SafeAreaView>
+  );
+};
 
-                    <TouchableOpacity
-                        onPress={() => console.log("Pressed")}
-                        style={{
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            flexDirection: 'row',
-                            height: 52,
-                            borderWidth: 1,
-                            borderColor: COLORS.grey,
-                            marginRight: 4,
-                            borderRadius: 10
-                        }}
-                    >
-                        <Image
-                            style={{
-                                height: 36,
-                                width: 36,
-                                marginRight: 8
-                            }}
-                            resizeMode='contain'
-                        />
+const styles = ScaledSheet.create({
+  mainContainer: {
+    flex: 1,
+    color: COLORS.white,
+  },
+  container: {
+    flex: 1,
+    marginHorizontal: '22@s'
+  },
+  titleContainer: {
+    marginVertical: '22@s'
+  },
+  titleText: {
+    fontSize: '24@s',
+    color: COLORS.black,
+    fontFamily: 'NunitoSansBold',
+  },
+  emailContainer: {
+    marginBottom: '12@s'
+  },
+  emailText: {
+    fontSize: '16@s',
+    fontWeight: '400',
+    marginVertical: '8@s'
+  },
+  emailInput: {
+    width: '100%',
+    height: '48@s',
+    borderColor: COLORS.black,
+    borderWidth: 1,
+    borderRadius: '8@s',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: '22@s'
+  },
+  sifreContainer: {
+    marginBottom: '12@s'
+  },
+  sifreText: {
+    fontSize: '16@s',
+    fontWeight: '400',
+    marginVertical: '8@s'
+  },
+  sifreInput: {
+    width: '100%',
+    height: '48@s',
+    borderColor: COLORS.black,
+    borderWidth: 1,
+    borderRadius: '8@s',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: '22@s'
+  },
+  sifreGoster: {
+    position: 'absolute',
+    right: '12@s'
+  },
+  button: {
+    marginTop: '18@s',
+    marginBottom: '12@s',
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: '20@s',
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: COLORS.grey,
+    marginHorizontal: '10@s'
+  },
+  text: {
+    fontSize: '14@s',
+    fontFamily: 'NunitoSans',
+  },
+  socialmedia: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    height: '45@s',
+    borderWidth: 1,
+    borderColor: COLORS.grey,
+    marginRight: '4@s',
+    borderRadius: '10@s',
+    marginBottom: '8@s',
+  },
+  socialmediaImg: {
+    height: '30@s',
+    width: '30@s',
+    marginRight: '8@s'
+  },
+  socialmediaText: {
+    fontFamily: 'NunitoSans',
+    fontSize: '16@s',
+  },
+  lastContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: '12@s',
+    marginBottom: '10@s'
+  },
+  lastText: {
+    fontSize: '16@s',
+    fontFamily: 'NunitoSans',
+  },
+  signupText: {
+    fontSize: '16@s',
+    color: '#218DF0',
+    fontFamily: 'NunitoSansBold',
+    marginLeft: '6@s'
+  }
+})
 
-                        <Text>Google</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    marginVertical: 22
-                }}>
-                    <Text style={{ fontSize: 16, color: COLORS.black }}>Hesabın yok mu?</Text>
-                    <Pressable
-                        onPress={() => navigation.navigate("Signup")}
-                    >
-                        <Text style={{
-                            fontSize: 16,
-                            color: COLORS.primary,
-                            fontWeight: "bold",
-                            marginLeft: 6
-                        }}>SignUp</Text>
-                    </Pressable>
-                </View>
-            </View>
-        </SafeAreaView>
-    )
-}
-
-export default Login
+export default Login;

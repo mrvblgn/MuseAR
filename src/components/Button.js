@@ -1,6 +1,7 @@
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import COLORS from '../constants/color'
+import { ScaledSheet } from "react-native-size-matters"
 
 const Button = (props) => {
     const filledBgColor = props.color || COLORS.primary;
@@ -17,20 +18,21 @@ const Button = (props) => {
             }}
             onPress={props.onPress}
         >
-            <Text style={{ fontSize: 18, ... { color: textColor } }}>{props.title}</Text>
+            <Text style={{ fontSize: '18@s', ... { color: textColor } }}>{props.title}</Text>
         </TouchableOpacity>
     )
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     button: {
-        paddingBottom: 16,
-        paddingVertical: 10,
+        paddingBottom: '16@s',
+        paddingVertical: '10@s',
         borderColor: COLORS.primary,
         borderWidth: 2,
-        borderRadius: 12,
+        borderRadius: '12@s',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        textAlign: 'center',
     }
 })
 export default Button
