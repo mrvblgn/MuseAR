@@ -141,7 +141,7 @@ const Cdetailsan = ({ navigation, route }) => {
 
 
   const handleFavoritePress = () => {
-    navigation.navigate("AuthStack")
+    //navigation.navigate("AuthStack")
     if (isFavorited) {
       removeFavorite(content.id);
     } else {

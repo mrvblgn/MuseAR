@@ -31,7 +31,7 @@ const Login = ({ navigation }) => {
       await signInWithEmailAndPassword(auth, email, password);
       setLoading(false);
       Alert.alert('Başarılı', 'Giriş başarılı.');
-      navigation.navigate('TabNavigator', { screen: 'Profil' }); // Giriş başarılı olunca ana ekrana yönlendir
+      navigation.navigate('LocationScreen'); // Giriş başarılı olunca ana ekrana yönlendir
     } catch (error) {
       setLoading(false);
       Alert.alert('Hata', error.message);
@@ -43,8 +43,7 @@ const Login = ({ navigation }) => {
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Fotoğraf Beğenmeden Önce</Text>
-          <Text style={styles.titleText}>Lütfen Giriş Yapınız</Text>
+          <Text style={styles.titleText}>Devam Etmek için Lütfen Giriş Yapınız</Text>
         </View>
 
         <View style={styles.emailContainer}>
