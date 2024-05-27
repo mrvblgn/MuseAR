@@ -31,7 +31,7 @@ const Login = ({ navigation }) => {
       await signInWithEmailAndPassword(auth, email, password);
       setLoading(false);
       Alert.alert('Başarılı', 'Giriş başarılı.');
-      navigation.navigate('LocationScreen'); // Giriş başarılı olunca ana ekrana yönlendir
+      navigation.navigate('LocationScreen');
     } catch (error) {
       setLoading(false);
       Alert.alert('Hata', error.message);
@@ -80,7 +80,12 @@ const Login = ({ navigation }) => {
           </View>
         </View>
 
-        <Button title={loading ? 'Yükleniyor...' : 'Giriş Yap'} filled style={styles.button} onPress={handleLogin} disabled={loading} />
+        <Button 
+          title={loading ? 'Yükleniyor...' : 'Giriş Yap'} 
+          filled 
+          style={styles.button} 
+          onPress={handleLogin} 
+          disabled={loading} />
 
         <View style={styles.lastContainer}>
           <Text style={styles.lastText}>Hesabınız yok mu?</Text>

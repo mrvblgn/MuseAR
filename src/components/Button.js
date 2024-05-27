@@ -32,7 +32,6 @@ const styles = ScaledSheet.create({
         borderRadius: '12@s',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
     }
 })
 export default Button

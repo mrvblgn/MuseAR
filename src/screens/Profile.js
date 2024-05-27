@@ -5,15 +5,22 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
-  Button,
+  TouchableOpacity
 } from "react-native";
 import { ref, onValue, remove } from "firebase/database";
 import { db } from "./firebaseConfig"; // Firebase configuration
 import { ScaledSheet } from "react-native-size-matters";
+import { useFonts } from "expo-font";
 
 const Profile = () => {
   const [favoriteContent, setFavoriteContent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedItems, setExpandedItems] = useState({});
+
+  const [loaded] = useFonts({
+    NunitoSans: require("../../assets/fonts/NunitoSans.ttf"),
+    NunitoSansBold: require("../../assets/fonts/NunitoSansBold.ttf"),
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +57,23 @@ const Profile = () => {
     }
   };
 
+  const toggleExpand = (key) => {
+    setExpandedItems((prevState) => ({
+      ...prevState,
+      [key]: !prevState[key],
+    }));
+  };
+
+  const renderDescription = (description, isExpanded) => {
+    const characterLimit = 200;
+    if (isExpanded) {
+      return description;
+    }
+    return description.length > characterLimit
+      ? `${description.substring(0, characterLimit)}...`
+      : description;
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -59,23 +83,36 @@ const Profile = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <Text style={styles.title}>Beğenilenler</Text>
       <FlatList
         data={favoriteContent}
         keyExtractor={(item) => item.key}
+        contentContainerStyle={styles.contentContainer}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
+            <Text style={styles.itemTitle}>{item.isim}</Text>
             <Image source={{ uri: item.uri }} style={styles.image} />
             <View style={styles.textContainer}>
-              <Text style={styles.itemTitle}>{item.isim}</Text>
-              <Text style={styles.itemDescription}>{item.metin}</Text>
+              <Text style={styles.itemDescription}>
+                {renderDescription(item.metin, expandedItems[item.key])}
+                {item.metin.length > 200 && (
+                  <TouchableOpacity
+                    onPress={() => toggleExpand(item.key)}
+                  >
+                    <Text style={styles.expandButtonText}>
+                      {expandedItems[item.key] ? "Daha az" : "Daha fazla"}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </Text>
             </View>
-            <Button
-              title="Kaldır"
-              onPress={() => handleDelete(item.key)}
+            <TouchableOpacity
               style={styles.deleteButton}
-            />
+              onPress={() => handleDelete(item.key)}
+            >
+              <Text style={styles.deleteButtonText}>Kaldır</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -89,38 +126,71 @@ const styles = ScaledSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  container: {
+  mainContainer: {
     flex: 1,
     padding: "16@s",
   },
+  expandButtonText: {
+    color: "#218DF0",
+    textDecorationLine: "underline",
+    fontFamily: "NunitoSans",
+    marginLeft: "4@s",
+    fontSize: "14@s"
+  },
   title: {
     fontSize: "24@s",
-    marginVertical: "16@s",
+    marginTop: "50@s",
+    marginBottom: "16@s",
+    fontFamily: "NunitoSansBold",
   },
   itemContainer: {
     marginBottom: "16@s",
-    position: "relative",
+    padding: "10@s",
+    backgroundColor: "#FFFFFF",
+    borderRadius: "12@s",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   image: {
-    width: "100@s",
-    height: "100@s",
-    marginBottom: "8@s",
+    width: "100%",
+    height: "200@s",
+    borderRadius: "10@s",
+    marginBottom: "10@s",
   },
   textContainer: {
-    marginBottom: "8@s",
+    flex: 1,
   },
   itemTitle: {
     fontSize: "18@s",
-    fontWeight: "bold",
+    fontFamily: "NunitoSansBold",
+    marginBottom: "8@s",
   },
   itemDescription: {
     fontSize: "14@s",
     color: "#666",
+    fontFamily: "NunitoSans",
   },
   deleteButton: {
-    position: "absolute",
-    right: 0,
-    top: 0,
+    backgroundColor: "#218DF0",
+    paddingVertical: "8@s",
+    paddingHorizontal: "16@s",
+    borderRadius: "8@s",
+    alignItems: "center",
+    marginTop: "10@s",
+  },
+  deleteButtonText: {
+    color: "#fff",
+    fontSize: "14@s",
+    fontFamily: "NunitoSansBold",
+  },
+  contentContainer: {
+    paddingBottom: "50@s",
   },
 });
 
